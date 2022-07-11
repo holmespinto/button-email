@@ -1,14 +1,44 @@
-import React from 'react'
-import { useCssHandles } from 'vtex.css-handles'
-const CSS_HANDLES = ['input_email']
+import * as React from 'react'
+import { Input } from 'vtex.styleguide'
+
+import style from './style.css'
+
+// funcion que aplica el patron al texto de entrada
+const IMask = (value: string) => {
+  const result1 = /^([da-z_.-]+)@([da-z.-]+).([a-z.]{2,6})$/.test(value)
+
+  return result1
+}
+
 const ButtonEmail = () => {
-  const handles = useCssHandles(CSS_HANDLES)
+  // inicializamos la variable de entrada
+  const [value, setValue] = React.useState('')
+  const [hasError, setError] = React.useState(true)
+
+  // funcion handleChange
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = ({
+    target: { value: eventValue },
+  }) => {
+    setValue(eventValue)
+  }
+
+  React.useEffect(() => {
+    // aplicamos la mascara de entrada
+    const valida = IMask(value)
+
+    if (value) setError(valida)
+  }, [value])
 
   return (
-      <div  className={handles.input_email}>
-       Ingrese aqui el email
+    <form>
+      <div className={hasError ? style.input_email : style.input_email_error}>
+        <Input
+          onChange={handleChange}
+          className={hasError ? style.input_email : style.input_email_error}
+        />
       </div>
-    )
+    </form>
+  )
 }
 
 export default ButtonEmail
