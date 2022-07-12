@@ -12,8 +12,8 @@ const IMask = (value: string) => {
 
 const ButtonEmail = () => {
   // inicializamos la variable de entrada
-  const [value, setValue] = React.useState('')
   const [hasError, setError] = React.useState(true)
+  const [value, setValue] = React.useState('')
 
   // funcion handleChange
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = ({
@@ -32,10 +32,7 @@ const ButtonEmail = () => {
   return (
     <form>
       <div className={hasError ? style.input_email : style.input_email_error}>
-        <Input
-          onChange={handleChange}
-          className={hasError ? style.input_email : style.input_email_error}
-        />
+        <Input onChange={handleChange} />
       </div>
     </form>
   )
